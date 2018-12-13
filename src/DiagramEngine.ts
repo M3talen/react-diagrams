@@ -1,21 +1,21 @@
-import { BaseEntity, BaseListener } from "./BaseEntity";
-import { DiagramModel } from "./models/DiagramModel";
-import * as _ from "lodash";
-import { BaseModel, BaseModelListener } from "./models/BaseModel";
-import { NodeModel } from "./models/NodeModel";
-import { PointModel } from "./models/PointModel";
-import { PortModel } from "./models/PortModel";
-import { LinkModel } from "./models/LinkModel";
-import { AbstractLabelFactory } from "./factories/AbstractLabelFactory";
-import { AbstractLinkFactory } from "./factories/AbstractLinkFactory";
-import { AbstractNodeFactory } from "./factories/AbstractNodeFactory";
-import { AbstractPortFactory } from "./factories/AbstractPortFactory";
-import { DefaultLinkFactory, DefaultNodeFactory } from "./main";
-import { ROUTING_SCALING_FACTOR } from "./routing/PathFinding";
-import { DefaultPortFactory } from "./defaults/factories/DefaultPortFactory";
-import { LabelModel } from "./models/LabelModel";
-import { DefaultLabelFactory } from "./defaults/factories/DefaultLabelFactory";
-import { Toolkit } from "./Toolkit";
+import { BaseEntity, BaseListener } from './BaseEntity';
+import { DiagramModel } from './models/DiagramModel';
+import * as _ from 'lodash';
+import { BaseModel, BaseModelListener } from './models/BaseModel';
+import { NodeModel } from './models/NodeModel';
+import { PointModel } from './models/PointModel';
+import { PortModel } from './models/PortModel';
+import { LinkModel } from './models/LinkModel';
+import { AbstractLabelFactory } from './factories/AbstractLabelFactory';
+import { AbstractLinkFactory } from './factories/AbstractLinkFactory';
+import { AbstractNodeFactory } from './factories/AbstractNodeFactory';
+import { AbstractPortFactory } from './factories/AbstractPortFactory';
+import { DefaultLinkFactory, DefaultNodeFactory } from './main';
+import { ROUTING_SCALING_FACTOR } from './routing/PathFinding';
+import { DefaultPortFactory } from './defaults/factories/DefaultPortFactory';
+import { LabelModel } from './models/LabelModel';
+import { DefaultLabelFactory } from './defaults/factories/DefaultLabelFactory';
+import { Toolkit } from './Toolkit';
 /**
  * @author Dylan Vorster
  */
@@ -71,7 +71,7 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 
 			//pop it onto the window so our E2E helpers can find it
 			if (window) {
-				(window as any)["diagram_instance"] = this;
+				(window as any)['diagram_instance'] = this;
 			}
 		}
 	}
@@ -81,10 +81,11 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 		this.registerLinkFactory(new DefaultLinkFactory());
 		this.registerPortFactory(new DefaultPortFactory());
 		this.registerLabelFactory(new DefaultLabelFactory());
+		
 	}
 
 	repaintCanvas() {
-		this.iterateListeners(listener => {
+		this.iterateListeners((listener) => {
 			if (listener.repaintCanvas) {
 				listener.repaintCanvas();
 			}
@@ -97,11 +98,11 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 
 	enableRepaintEntities(entities: BaseModel<BaseEntity, BaseModelListener>[]) {
 		this.paintableWidgets = {};
-		entities.forEach(entity => {
+		entities.forEach((entity) => {
 			//if a node is requested to repaint, add all of its links
 			if (entity instanceof NodeModel) {
-				_.forEach(entity.getPorts(), port => {
-					_.forEach(port.getLinks(), link => {
+				_.forEach(entity.getPorts(), (port) => {
+					_.forEach(port.getLinks(), (link) => {
 						this.paintableWidgets[link.getID()] = true;
 					});
 				});
@@ -171,7 +172,7 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 
 	registerLabelFactory(factory: AbstractLabelFactory) {
 		this.labelFactories[factory.getType()] = factory;
-		this.iterateListeners(listener => {
+		this.iterateListeners((listener) => {
 			if (listener.labelFactoriesUpdated) {
 				listener.labelFactoriesUpdated();
 			}
@@ -180,7 +181,7 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 
 	registerPortFactory(factory: AbstractPortFactory) {
 		this.portFactories[factory.getType()] = factory;
-		this.iterateListeners(listener => {
+		this.iterateListeners((listener) => {
 			if (listener.portFactoriesUpdated) {
 				listener.portFactoriesUpdated();
 			}
@@ -189,7 +190,7 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 
 	registerNodeFactory(factory: AbstractNodeFactory) {
 		this.nodeFactories[factory.getType()] = factory;
-		this.iterateListeners(listener => {
+		this.iterateListeners((listener) => {
 			if (listener.nodeFactoriesUpdated) {
 				listener.nodeFactoriesUpdated();
 			}
@@ -198,7 +199,7 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 
 	registerLinkFactory(factory: AbstractLinkFactory) {
 		this.linkFactories[factory.getType()] = factory;
-		this.iterateListeners(listener => {
+		this.iterateListeners((listener) => {
 			if (listener.linkFactoriesUpdated) {
 				listener.linkFactoriesUpdated();
 			}
@@ -248,7 +249,7 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 	generateWidgetForLink(link: LinkModel): JSX.Element | null {
 		var linkFactory = this.getFactoryForLink(link);
 		if (!linkFactory) {
-			throw new Error("Cannot find link factory for link: " + link.getType());
+			throw new Error('Cannot find link factory for link: ' + link.getType());
 		}
 		return linkFactory.generateReactWidget(this, link);
 	}
@@ -256,7 +257,7 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 	generateWidgetForNode(node: NodeModel): JSX.Element | null {
 		var nodeFactory = this.getFactoryForNode(node);
 		if (!nodeFactory) {
-			throw new Error("Cannot find widget factory for node: " + node.getType());
+			throw new Error('Cannot find widget factory for node: ' + node.getType());
 		}
 		return nodeFactory.generateReactWidget(this, node);
 	}
@@ -277,7 +278,7 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 	getNodeElement(node: NodeModel): Element {
 		const selector = this.canvas.querySelector(`.node[data-nodeid="${node.getID()}"]`);
 		if (selector === null) {
-			throw new Error("Cannot find Node element with nodeID: [" + node.getID() + "]");
+			throw new Error('Cannot find Node element with nodeID: [' + node.getID() + ']');
 		}
 		return selector;
 	}
@@ -288,11 +289,11 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 		);
 		if (selector === null) {
 			throw new Error(
-				"Cannot find Node Port element with nodeID: [" +
+				'Cannot find Node Port element with nodeID: [' +
 					port.getParent().getID() +
-					"] and name: [" +
+					'] and name: [' +
 					port.getName() +
-					"]"
+					']'
 			);
 		}
 		return selector;
@@ -471,7 +472,7 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 		height: number;
 		vAdjustmentFactor: number;
 	} => {
-		const allNodesCoords = _.values(this.diagramModel.nodes).map(item => ({
+		const allNodesCoords = _.values(this.diagramModel.nodes).map((item) => ({
 			x: item.x,
 			width: item.width,
 			y: item.y,
@@ -479,15 +480,15 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 		}));
 
 		const allLinks = _.values(this.diagramModel.links);
-		const allPortsCoords = _.flatMap(allLinks.map(link => [link.sourcePort, link.targetPort]))
-			.filter(port => port !== null)
-			.map(item => ({
+		const allPortsCoords = _.flatMap(allLinks.map((link) => [ link.sourcePort, link.targetPort ]))
+			.filter((port) => port !== null)
+			.map((item) => ({
 				x: item.x,
 				width: item.width,
 				y: item.y,
 				height: item.height
 			}));
-		const allPointsCoords = _.flatMap(allLinks.map(link => link.points)).map(item => ({
+		const allPointsCoords = _.flatMap(allLinks.map((link) => link.points)).map((item) => ({
 			// points don't have width/height, so let's just use 0
 			x: item.x,
 			width: 0,
@@ -498,23 +499,23 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 		const canvas = this.canvas as HTMLDivElement;
 		const minX =
 			Math.floor(
-				Math.min(_.minBy(_.concat(allNodesCoords, allPortsCoords, allPointsCoords), item => item.x).x, 0) /
+				Math.min(_.minBy(_.concat(allNodesCoords, allPortsCoords, allPointsCoords), (item) => item.x).x, 0) /
 					ROUTING_SCALING_FACTOR
 			) * ROUTING_SCALING_FACTOR;
 		const maxXElement = _.maxBy(
 			_.concat(allNodesCoords, allPortsCoords, allPointsCoords),
-			item => item.x + item.width
+			(item) => item.x + item.width
 		);
 		const maxX = Math.max(maxXElement.x + maxXElement.width, canvas.offsetWidth);
 
 		const minY =
 			Math.floor(
-				Math.min(_.minBy(_.concat(allNodesCoords, allPortsCoords, allPointsCoords), item => item.y).y, 0) /
+				Math.min(_.minBy(_.concat(allNodesCoords, allPortsCoords, allPointsCoords), (item) => item.y).y, 0) /
 					ROUTING_SCALING_FACTOR
 			) * ROUTING_SCALING_FACTOR;
 		const maxYElement = _.maxBy(
 			_.concat(allNodesCoords, allPortsCoords, allPointsCoords),
-			item => item.y + item.height
+			(item) => item.y + item.height
 		);
 		const maxY = Math.max(maxYElement.y + maxYElement.height, canvas.offsetHeight);
 
@@ -530,7 +531,7 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 	 * Updates (by reference) where nodes will be drawn on the matrix passed in.
 	 */
 	markNodes = (matrix: number[][]): void => {
-		_.values(this.diagramModel.nodes).forEach(node => {
+		_.values(this.diagramModel.nodes).forEach((node) => {
 			const startX = Math.floor(node.x / ROUTING_SCALING_FACTOR);
 			const endX = Math.ceil((node.x + node.width) / ROUTING_SCALING_FACTOR);
 			const startY = Math.floor(node.y / ROUTING_SCALING_FACTOR);
@@ -549,9 +550,9 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 	 */
 	markPorts = (matrix: number[][]): void => {
 		const allElements = _.flatMap(
-			_.values(this.diagramModel.links).map(link => [].concat(link.sourcePort, link.targetPort))
+			_.values(this.diagramModel.links).map((link) => [].concat(link.sourcePort, link.targetPort))
 		);
-		allElements.filter(port => port !== null).forEach(port => {
+		allElements.filter((port) => port !== null).forEach((port) => {
 			const startX = Math.floor(port.x / ROUTING_SCALING_FACTOR);
 			const endX = Math.ceil((port.x + port.width) / ROUTING_SCALING_FACTOR);
 			const startY = Math.floor(port.y / ROUTING_SCALING_FACTOR);
