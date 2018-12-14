@@ -54,4 +54,5 @@ export class TextNodeModel extends NodeModel {
 			return !portModel.in;
 		});
 	}
+
 }

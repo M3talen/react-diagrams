@@ -1,9 +1,10 @@
-import * as React from "react";
-import { NodeModel } from "../models/NodeModel";
-import { BaseWidget, BaseWidgetProps } from "./BaseWidget";
+import * as React from 'react';
+import { NodeModel } from '../models/NodeModel';
+import { BaseWidget, BaseWidgetProps } from './BaseWidget';
 
 export interface PortProps extends BaseWidgetProps {
 	name: string;
+	isInput: boolean;
 	node: NodeModel;
 }
 
@@ -16,14 +17,19 @@ export interface PortState {
  */
 export class PortWidget extends BaseWidget<PortProps, PortState> {
 	constructor(props: PortProps) {
-		super("srd-port", props);
+		super('srd-port', props);
 		this.state = {
 			selected: false
 		};
 	}
 
 	getClassName() {
-		return "port " + super.getClassName() + (this.state.selected ? this.bem("--selected") : "");
+		return (
+			'port ' +
+			super.getClassName().slice(0, -1) +
+			(this.props.isInput ? '-left ' : '-right ') +
+			(this.state.selected ? this.bem('--selected') : '')
+		);
 	}
 
 	render() {

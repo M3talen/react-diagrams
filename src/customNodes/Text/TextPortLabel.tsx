@@ -22,13 +22,16 @@ export class TextPortLabel extends BaseWidget<TextPortLabelProps, TextPortLabelS
 	}
 
 	render() {
-		var port = <PortWidget node={this.props.model.getParent()} name={this.props.model.name} />;
+		var port = <PortWidget node={this.props.model.getParent()} isInput={this.props.model.in} name={this.props.model.name}  />;
 		var label = <div className="name">{this.props.model.label}</div>;
+		var input = <input className="srd-input" defaultValue={this.props.model.label} onChange={(e)=>{
+			this.props.model.label = e.currentTarget.value;
+		}} ></input>;
 
 		return (
 			<div {...this.getProps()}>
-				{this.props.model.in ? port : label}
-				{this.props.model.in ? label : port}
+				{this.props.model.in ? port : input}
+				{this.props.model.in ? input : port}
 			</div>
 		);
 	}
