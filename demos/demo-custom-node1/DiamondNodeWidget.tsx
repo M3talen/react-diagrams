@@ -67,7 +67,7 @@ export class DiamonNodeWidget extends React.Component<DiamonNodeWidgetProps, Dia
 						left: -8
 					}}
 				>
-					<PortWidget name="left" node={this.props.node} />
+					<PortWidget name="left" isInput={false}  node={this.props.node} />
 				</div>
 				<div
 					style={{
@@ -77,7 +77,7 @@ export class DiamonNodeWidget extends React.Component<DiamonNodeWidgetProps, Dia
 						top: -8
 					}}
 				>
-					<PortWidget name="top" node={this.props.node} />
+					<PortWidget name="top" isInput={false}  node={this.props.node} />
 				</div>
 				<div
 					style={{
@@ -87,7 +87,7 @@ export class DiamonNodeWidget extends React.Component<DiamonNodeWidgetProps, Dia
 						top: this.props.size / 2 - 8
 					}}
 				>
-					<PortWidget name="right" node={this.props.node} />
+					<PortWidget name="right" isInput={false}  node={this.props.node} />
 				</div>
 				<div
 					style={{
@@ -97,7 +97,7 @@ export class DiamonNodeWidget extends React.Component<DiamonNodeWidgetProps, Dia
 						top: this.props.size - 8
 					}}
 				>
-					<PortWidget name="bottom" node={this.props.node} />
+					<PortWidget name="bottom" isInput={false}  node={this.props.node} />
 				</div>
 			</div>
 		);

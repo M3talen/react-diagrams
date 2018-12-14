@@ -17,6 +17,12 @@ export default () => {
 	var model = new DiagramModel();
 
 	//3-A) create a default node
+
+	var node14 = new DefaultNodeModel("Node 0", "rgb(0,192,255)");
+	var port14 = node14.addOutPort("Out");
+	node14.setPosition(50, 100);
+
+
 	var node1 = new DefaultNodeModel("Node 1", "rgb(0,192,255)");
 	var port1 = node1.addOutPort("Out");
 	node1.setPosition(100, 100);
@@ -39,7 +45,7 @@ export default () => {
 	var link2 = port2.link(port3o1);
 
 	//4) add the models to the root graph
-	model.addAll(node1, node2, node3, link1, link2);
+	model.addAll(node14, node1, node2, node3, link1, link2);
 
 
 	//5) load model into engine

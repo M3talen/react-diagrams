@@ -1,6 +1,6 @@
-import * as React from "react";
-import { DiamondNodeModel } from "./DiamondNodeModel";
-import { PortWidget } from "storm-react-diagrams";
+import * as React from 'react';
+import { DiamondNodeModel } from './DiamondNodeModel';
+import { PortWidget } from 'storm-react-diagrams';
 
 export interface DiamonNodeWidgetProps {
 	node: DiamondNodeModel;
@@ -26,9 +26,9 @@ export class DiamonNodeWidget extends React.Component<DiamonNodeWidgetProps, Dia
 	render() {
 		return (
 			<div
-				className={"diamond-node"}
+				className={'diamond-node'}
 				style={{
-					position: "relative",
+					position: 'relative',
 					width: this.props.size,
 					height: this.props.size
 				}}
@@ -61,43 +61,43 @@ export class DiamonNodeWidget extends React.Component<DiamonNodeWidgetProps, Dia
 				/>
 				<div
 					style={{
-						position: "absolute",
+						position: 'absolute',
 						zIndex: 10,
 						top: this.props.size / 2 - 8,
 						left: -8
 					}}
 				>
-					<PortWidget name="left" node={this.props.node} />
+					<PortWidget name="left" isInput={false} node={this.props.node} />
 				</div>
 				<div
 					style={{
-						position: "absolute",
+						position: 'absolute',
 						zIndex: 10,
 						left: this.props.size / 2 - 8,
 						top: -8
 					}}
 				>
-					<PortWidget name="top" node={this.props.node} />
+					<PortWidget name="top" isInput={false} node={this.props.node} />
 				</div>
 				<div
 					style={{
-						position: "absolute",
+						position: 'absolute',
 						zIndex: 10,
 						left: this.props.size - 8,
 						top: this.props.size / 2 - 8
 					}}
 				>
-					<PortWidget name="right" node={this.props.node} />
+					<PortWidget name="right" isInput={false} node={this.props.node} />
 				</div>
 				<div
 					style={{
-						position: "absolute",
+						position: 'absolute',
 						zIndex: 10,
 						left: this.props.size / 2 - 8,
 						top: this.props.size - 8
 					}}
 				>
-					<PortWidget name="bottom" node={this.props.node} />
+					<PortWidget name="bottom" isInput={false} node={this.props.node} />
 				</div>
 			</div>
 		);

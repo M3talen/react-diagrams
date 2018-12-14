@@ -20,6 +20,19 @@
         background: none;
         border-radius: 0;
         color:white;
+    };
+
+    &__close {
+      cursor: pointer;
+      color: #fff;
+      font-size: 1.2em;
+      margin-right: 7px;
+      margin-bottom: 2px;
+    }
+
+    &__closeCircle {
+      border-radius: 10px;
+      background: rgba(70, 70, 70, 0.8)
     }
 
     &__title {
