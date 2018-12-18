@@ -1,8 +1,8 @@
-import { BaseModel, BaseModelListener } from "./BaseModel";
-import { PortModel } from "./PortModel";
-import * as _ from "lodash";
-import { DiagramEngine } from "../DiagramEngine";
-import { DiagramModel } from "./DiagramModel";
+import { BaseModel, BaseModelListener } from './BaseModel';
+import { PortModel } from './PortModel';
+import * as _ from 'lodash';
+import { DiagramEngine } from '../DiagramEngine';
+import { DiagramModel } from './DiagramModel';
 
 export class NodeModel extends BaseModel<DiagramModel, BaseModelListener> {
 	x: number;
@@ -14,7 +14,7 @@ export class NodeModel extends BaseModel<DiagramModel, BaseModelListener> {
 	width: number;
 	height: number;
 
-	constructor(nodeType: string = "default", id?: string) {
+	constructor(nodeType: string = 'default', id?: string) {
 		super(nodeType, id);
 		this.x = 0;
 		this.y = 0;
@@ -26,8 +26,8 @@ export class NodeModel extends BaseModel<DiagramModel, BaseModelListener> {
 		//store position
 		let oldX = this.x;
 		let oldY = this.y;
-		_.forEach(this.ports, port => {
-			_.forEach(port.getLinks(), link => {
+		_.forEach(this.ports, (port) => {
+			_.forEach(port.getLinks(), (link) => {
 				let point = link.getPointForPort(port);
 				point.x = point.x + x - oldX;
 				point.y = point.y + y - oldY;
@@ -42,9 +42,9 @@ export class NodeModel extends BaseModel<DiagramModel, BaseModelListener> {
 
 		// add the points of each link that are selected here
 		if (this.isSelected()) {
-			_.forEach(this.ports, port => {
+			_.forEach(this.ports, (port) => {
 				entities = entities.concat(
-					_.map(port.getLinks(), link => {
+					_.map(port.getLinks(), (link) => {
 						return link.getPointForPort(port);
 					})
 				);
@@ -72,7 +72,7 @@ export class NodeModel extends BaseModel<DiagramModel, BaseModelListener> {
 			x: this.x,
 			y: this.y,
 			extras: this.extras,
-			ports: _.map(this.ports, port => {
+			ports: _.map(this.ports, (port) => {
 				return port.serialize();
 			})
 		});
@@ -81,15 +81,15 @@ export class NodeModel extends BaseModel<DiagramModel, BaseModelListener> {
 	doClone(lookupTable = {}, clone) {
 		// also clone the ports
 		clone.ports = {};
-		_.forEach(this.ports, port => {
+		_.forEach(this.ports, (port) => {
 			clone.addPort(port.clone(lookupTable));
 		});
 	}
 
 	remove() {
 		super.remove();
-		_.forEach(this.ports, port => {
-			_.forEach(port.getLinks(), link => {
+		_.forEach(this.ports, (port) => {
+			_.forEach(port.getLinks(), (link) => {
 				link.remove();
 			});
 		});

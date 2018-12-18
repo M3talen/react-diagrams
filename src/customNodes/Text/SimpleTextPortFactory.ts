@@ -9,6 +9,6 @@ export class SimpleTextPortFactory extends AbstractPortFactory<TextPortModel> {
 	}
 
 	getNewInstance(initialConfig?: any): TextPortModel {
-		return new TextPortModel(true, "unknown");
+		return new TextPortModel("INPUT", "unknown");
 	}
 }

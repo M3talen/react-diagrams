@@ -61,6 +61,9 @@ export class TextNodeWidget extends BaseWidget<TextNodeProps, TextNodeState> {
 						{_.map(this.props.node.getInPorts(), this.generatePort.bind(this))}
 					</div>
 					<div className={this.bem('__out')}>
+						<div className={this.bem('__timeout')}>
+							{_.map(this.props.node.getTimeoutPorts(), this.generatePort.bind(this))}
+						</div>
 						{_.map(this.props.node.getOutPorts(), this.generatePort.bind(this))}
 					</div>
 				</div>
@@ -69,7 +72,7 @@ export class TextNodeWidget extends BaseWidget<TextNodeProps, TextNodeState> {
 						<a
 							className={this.bem('__close')}
 							onClick={() => {
-								this.props.node.removePort(this.props.node.getInPorts().slice(-1)[0] );
+								this.props.node.removePort(this.props.node.getInPorts().slice(-1)[0]);
 								this.props.diagramEngine.repaintCanvas();
 							}}
 						>

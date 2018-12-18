@@ -108,7 +108,13 @@
       background-image: linear-gradient(rgba(black, 0.1), rgba(black, 0.2));
     }
   
-    &__in, &__out{
+    &__in, &__out {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    &__timeout {
       flex-grow: 1;
       display: flex;
       flex-direction: column;

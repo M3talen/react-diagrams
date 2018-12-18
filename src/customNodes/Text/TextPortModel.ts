@@ -1,8 +1,8 @@
-import * as _ from "lodash";
-import { PortModel } from "../../models/PortModel";
-import { DiagramEngine } from "../../DiagramEngine";
-import { DefaultLinkModel } from "../../defaults/models/DefaultLinkModel";
-import { LinkModel } from "../../models/LinkModel";
+import * as _ from 'lodash';
+import { PortModel } from '../../models/PortModel';
+import { DiagramEngine } from '../../DiagramEngine';
+import { DefaultLinkModel } from '../../defaults/models/DefaultLinkModel';
+import { LinkModel } from '../../models/LinkModel';
 
 /**
  * @author Alen Štruklec
@@ -10,24 +10,28 @@ import { LinkModel } from "../../models/LinkModel";
 export class TextPortModel extends PortModel {
 	in: boolean;
 	label: string;
+	portType: string;
 	links: { [id: string]: DefaultLinkModel };
 
-	constructor(isInput: boolean, name: string, label: string = null, id?: string) {
-		super(name, "default", id);
-		this.in = isInput;
+	constructor(portType: string, name: string, label: string = null, id?: string) {
+		super(name, 'text', id);
+		this.in = portType == "INPUT" ? true : false;
 		this.label = label || name;
+		this.portType = portType;
 	}
 
 	deSerialize(object, engine: DiagramEngine) {
 		super.deSerialize(object, engine);
 		this.in = object.in;
 		this.label = object.label;
+		this.portType = object.portType;
 	}
 
 	serialize() {
 		return _.merge(super.serialize(), {
 			in: this.in,
-			label: this.label
+			label: this.label,
+			portType: this.portType
 		});
 	}
 

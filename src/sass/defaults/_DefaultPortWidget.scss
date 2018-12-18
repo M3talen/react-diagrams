@@ -13,7 +13,7 @@
   }
 
 
-  &--out{
+  &--out, &--timeout{
     justify-content: flex-end;
 
     #{$p}__name {

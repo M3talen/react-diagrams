@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import { NodeModel } from "../../models/NodeModel";
 import { Toolkit } from "../../Toolkit";
 import { DiagramEngine } from "../../DiagramEngine";
+import { log } from "util";
 
 /**
  * @author Alen Štruklec
@@ -21,11 +22,15 @@ export class TextNodeModel extends NodeModel {
 	}
 
 	addInPort(label: string): TextPortModel {
-		return this.addPort(new TextPortModel(true, Toolkit.UID(), label));
+		return this.addPort(new TextPortModel("INPUT", Toolkit.UID(), label));
 	}
 
 	addOutPort(label: string): TextPortModel {
-		return this.addPort(new TextPortModel(false, Toolkit.UID(), label));
+		return this.addPort(new TextPortModel("OUTPUT", Toolkit.UID(), label));
+	}
+
+	addTimeoutPort(label: string): TextPortModel {
+		return this.addPort(new TextPortModel("TIMEOUT", Toolkit.UID(), label));
 	}
 
 	deSerialize(object, engine: DiagramEngine) {
@@ -45,13 +50,19 @@ export class TextNodeModel extends NodeModel {
 
 	getInPorts(): TextPortModel[] {
 		return _.filter(this.ports, portModel => {
-			return portModel.in;
+			return portModel.portType === "INPUT";
+		});
+	}
+
+	getTimeoutPorts(): TextPortModel[] {
+		return _.filter(this.ports, portModel => {
+			return portModel.portType === "TIMEOUT";
 		});
 	}
 
 	getOutPorts(): TextPortModel[] {
 		return _.filter(this.ports, portModel => {
-			return !portModel.in;
+			return portModel.portType === "OUTPUT";
 		});
 	}
 
