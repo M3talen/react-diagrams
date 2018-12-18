@@ -52,12 +52,6 @@ export * from "./widgets/BaseWidget";
 export * from "./widgets/layers/LinkLayerWidget";
 export * from "./widgets/layers/NodeLayerWidget";
 
-export * from "./customNodes/Diamond/DiamondNodeFactory";
-export * from "./customNodes/Diamond/DiamondNodeModel";
-export * from "./customNodes/Diamond/DiamondNodeWidget";
-export * from "./customNodes/Diamond/DiamondPortModel";
-export * from "./customNodes/Diamond/SimplePortFactory";
-
 export * from "./customNodes/Text/TextNodeFactory";
 export * from "./customNodes/Text/TextNodeModel";
 export * from "./customNodes/Text/TextNodeWidget";
