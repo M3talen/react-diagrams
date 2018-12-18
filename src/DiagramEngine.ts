@@ -13,8 +13,10 @@ import { AbstractPortFactory } from './factories/AbstractPortFactory';
 import { DefaultLinkFactory, DefaultNodeFactory } from './main';
 import { ROUTING_SCALING_FACTOR } from './routing/PathFinding';
 import { DefaultPortFactory } from './defaults/factories/DefaultPortFactory';
-import { SimpleTextPortFactory} from './customNodes/Text/SimpleTextPortFactory';
-import { TextNodeFactory} from './customNodes/Text/TextNodeFactory';
+import { SimpleTextPortFactory } from './customNodes/Text/SimpleTextPortFactory';
+import { TextNodeFactory } from './customNodes/Text/TextNodeFactory';
+import { DelayPortFactory } from './customNodes/Delay/DelayPortFactory';
+import { DelayNodeFactory } from './customNodes/Delay/DelayNodeFactory';
 import { LabelModel } from './models/LabelModel';
 import { DefaultLabelFactory } from './defaults/factories/DefaultLabelFactory';
 import { Toolkit } from './Toolkit';
@@ -81,11 +83,12 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 	installDefaultFactories() {
 		this.registerNodeFactory(new DefaultNodeFactory());
 		this.registerNodeFactory(new TextNodeFactory());
+		this.registerNodeFactory(new DelayNodeFactory());
 		this.registerLinkFactory(new DefaultLinkFactory());
 		this.registerPortFactory(new DefaultPortFactory());
 		this.registerPortFactory(new SimpleTextPortFactory());
+		this.registerPortFactory(new DelayPortFactory());
 		this.registerLabelFactory(new DefaultLabelFactory());
-		
 	}
 
 	repaintCanvas() {

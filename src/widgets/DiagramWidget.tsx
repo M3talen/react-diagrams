@@ -49,13 +49,13 @@ export interface DiagramState {
 export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 	public static defaultProps: DiagramProps = {
 		diagramEngine: null,
-		allowLooseLinks: true,
+		allowLooseLinks: false,
 		allowCanvasTranslation: true,
 		allowCanvasZoom: true,
 		inverseZoom: false,
 		maxNumberPointsPerLink: Infinity, // backwards compatible default
 		smartRouting: false,
-		deleteKeys: [46, 8]
+		deleteKeys: [46]
 	};
 
 	onKeyUpPointer: (this: Window, ev: KeyboardEvent) => void = null;

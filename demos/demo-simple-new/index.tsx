@@ -1,4 +1,4 @@
-import { DiagramEngine, DiagramModel, DefaultNodeModel, LinkModel, DiagramWidget } from 'storm-react-diagrams';
+import { DiagramEngine, DelayNodeModel, DiagramModel, DefaultNodeModel, LinkModel, DiagramWidget } from 'storm-react-diagrams';
 import * as React from 'react';
 import { DemoWorkspaceWidget } from '../.helpers/DemoWorkspaceWidget';
 import { action } from '@storybook/addon-actions';
@@ -33,13 +33,19 @@ export default () => {
 	var port3i = node3.addInPort('In');
 	var port35 = node3.addTimeoutPort('Timeout');
 
+	
+	var node4 = new DelayNodeModel('Delay', 'test', 'rgb(70,192,150)');
+	node4.setPosition(200, 200);
+	var port3i = node4.addInPort('In');
+	var port3 = node4.addOutPort('Out');
+
 	//3-B) create another default node
 	var node2 = new DefaultNodeModel('Node 2', 'rgb(192,255,0)');
 	var port2 = node2.addInPort('In');
 	node2.setPosition(400, 100);
 
 	//4) add the models to the root graph
-	model.addAll(node1, node2, node3);
+	model.addAll(node1, node2, node3, node4);
 
 	//5) load model into engine
 	engine.setDiagramModel(model);

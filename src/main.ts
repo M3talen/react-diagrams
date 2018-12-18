@@ -63,3 +63,9 @@ export * from "./customNodes/Text/TextNodeModel";
 export * from "./customNodes/Text/TextNodeWidget";
 export * from "./customNodes/Text/TextPortModel";
 export * from "./customNodes/Text/SimpleTextPortFactory";
+
+export * from "./customNodes/Delay/DelayNodeFactory";
+export * from "./customNodes/Delay/DelayNodeModel";
+export * from "./customNodes/Delay/DelayNodeWidget";
+export * from "./customNodes/Delay/DelayPortModel";
+export * from "./customNodes/Delay/DelayPortFactory";
