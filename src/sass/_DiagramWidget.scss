@@ -10,4 +10,17 @@
     background-color: rgba(0,192,255,0.2);
     border: solid 2px rgb(0,192,255);
   }
+  
+  &__close {
+    cursor: pointer;
+    color: #fff;
+    font-size: 1.2em;
+    margin: 4px;
+  }
+
+  &__inPortsMenu{
+    display: inline;
+    padding: 8px;
+    background: #00000069
+  }
 }

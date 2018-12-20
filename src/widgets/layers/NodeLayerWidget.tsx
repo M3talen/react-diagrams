@@ -1,9 +1,12 @@
-import * as React from "react";
-import { DiagramEngine } from "../../DiagramEngine";
-import * as _ from "lodash";
-import { NodeWidget } from "../NodeWidget";
-import { NodeModel } from "../../models/NodeModel";
-import { BaseWidget, BaseWidgetProps } from "../BaseWidget";
+import * as React from 'react';
+import { DiagramEngine } from '../../DiagramEngine';
+import * as _ from 'lodash';
+import { NodeWidget } from '../NodeWidget';
+import { NodeModel } from '../../models/NodeModel';
+import { BaseWidget, BaseWidgetProps } from '../BaseWidget';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 export interface NodeLayerProps extends BaseWidgetProps {
 	diagramEngine: DiagramEngine;
@@ -13,14 +16,14 @@ export interface NodeLayerState {}
 
 export class NodeLayerWidget extends BaseWidget<NodeLayerProps, NodeLayerState> {
 	constructor(props: NodeLayerProps) {
-		super("srd-node-layer", props);
+		super('srd-node-layer', props);
 		this.state = {};
 	}
 
 	updateNodeDimensions = () => {
 		if (!this.props.diagramEngine.nodesRendered) {
 			const diagramModel = this.props.diagramEngine.getDiagramModel();
-			_.map(diagramModel.getNodes(), node => {
+			_.map(diagramModel.getNodes(), (node) => {
 				node.updateDimensions(this.props.diagramEngine.getNodeDimensions(node));
 			});
 		}
@@ -38,13 +41,13 @@ export class NodeLayerWidget extends BaseWidget<NodeLayerProps, NodeLayerState> 
 				{...this.getProps()}
 				style={{
 					transform:
-						"translate(" +
+						'translate(' +
 						diagramModel.getOffsetX() +
-						"px," +
+						'px,' +
 						diagramModel.getOffsetY() +
-						"px) scale(" +
+						'px) scale(' +
 						diagramModel.getZoomLevel() / 100.0 +
-						")"
+						')'
 				}}
 			>
 				{_.map(diagramModel.getNodes(), (node: NodeModel) => {

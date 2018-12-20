@@ -1,21 +1,24 @@
-import * as React from "react";
-import { DiagramEngine } from "../DiagramEngine";
-import * as _ from "lodash";
-import { LinkLayerWidget } from "./layers/LinkLayerWidget";
-import { NodeLayerWidget } from "./layers/NodeLayerWidget";
-import { Toolkit } from "../Toolkit";
-import { BaseAction } from "../actions/BaseAction";
-import { MoveCanvasAction } from "../actions/MoveCanvasAction";
-import { MoveItemsAction } from "../actions/MoveItemsAction";
-import { SelectingAction } from "../actions/SelectingAction";
-import { NodeModel } from "../models/NodeModel";
-import { PointModel } from "../models/PointModel";
-import { PortModel } from "../models/PortModel";
-import { LinkModel } from "../models/LinkModel";
-import { SelectionModel } from "../models/SelectionModel";
-import { BaseModel, BaseModelListener } from "../models/BaseModel";
-import { BaseEntity } from "../BaseEntity";
-import { BaseWidget, BaseWidgetProps } from "./BaseWidget";
+import * as React from 'react';
+import { DiagramEngine } from '../DiagramEngine';
+import * as _ from 'lodash';
+import { LinkLayerWidget } from './layers/LinkLayerWidget';
+import { NodeLayerWidget } from './layers/NodeLayerWidget';
+import { Toolkit } from '../Toolkit';
+import { BaseAction } from '../actions/BaseAction';
+import { MoveCanvasAction } from '../actions/MoveCanvasAction';
+import { MoveItemsAction } from '../actions/MoveItemsAction';
+import { SelectingAction } from '../actions/SelectingAction';
+import { NodeModel } from '../models/NodeModel';
+import { PointModel } from '../models/PointModel';
+import { PortModel } from '../models/PortModel';
+import { LinkModel } from '../models/LinkModel';
+import { SelectionModel } from '../models/SelectionModel';
+import { BaseModel, BaseModelListener } from '../models/BaseModel';
+import { BaseEntity } from '../BaseEntity';
+import { BaseWidget, BaseWidgetProps } from './BaseWidget';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 export interface DiagramProps extends BaseWidgetProps {
 	diagramEngine: DiagramEngine;
@@ -55,13 +58,13 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 		inverseZoom: false,
 		maxNumberPointsPerLink: Infinity, // backwards compatible default
 		smartRouting: false,
-		deleteKeys: [46]
+		deleteKeys: [ 46 ]
 	};
 
 	onKeyUpPointer: (this: Window, ev: KeyboardEvent) => void = null;
 
 	constructor(props: DiagramProps) {
-		super("srd-diagram", props);
+		super('srd-diagram', props);
 		this.onMouseMove = this.onMouseMove.bind(this);
 		this.onMouseUp = this.onMouseUp.bind(this);
 		this.state = {
@@ -77,9 +80,9 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 	componentWillUnmount() {
 		this.props.diagramEngine.removeListener(this.state.diagramEngineListener);
 		this.props.diagramEngine.setCanvas(null);
-		window.removeEventListener("keyup", this.onKeyUpPointer);
-		window.removeEventListener("mouseUp", this.onMouseUp);
-		window.removeEventListener("mouseMove", this.onMouseMove);
+		window.removeEventListener('keyup', this.onKeyUpPointer);
+		window.removeEventListener('mouseUp', this.onMouseUp);
+		window.removeEventListener('mouseMove', this.onMouseMove);
 	}
 
 	componentWillReceiveProps(nextProps: DiagramProps) {
@@ -125,10 +128,10 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 			})
 		});
 
-		window.addEventListener("keyup", this.onKeyUpPointer, false);
+		window.addEventListener('keyup', this.onKeyUpPointer, false);
 
 		// dont focus the window when in test mode - jsdom fails
-		if (process.env.NODE_ENV !== "test") {
+		if (process.env.NODE_ENV !== 'test') {
 			window.focus();
 		}
 	}
@@ -141,42 +144,42 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 		var diagramModel = this.props.diagramEngine.diagramModel;
 
 		//is it a port
-		var element = Toolkit.closest(target, ".port[data-name]");
+		var element = Toolkit.closest(target, '.port[data-name]');
 		if (element) {
-			var nodeElement = Toolkit.closest(target, ".node[data-nodeid]") as HTMLElement;
+			var nodeElement = Toolkit.closest(target, '.node[data-nodeid]') as HTMLElement;
 			return {
 				model: diagramModel
-					.getNode(nodeElement.getAttribute("data-nodeid"))
-					.getPort(element.getAttribute("data-name")),
+					.getNode(nodeElement.getAttribute('data-nodeid'))
+					.getPort(element.getAttribute('data-name')),
 				element: element
 			};
 		}
 
 		//look for a point
-		element = Toolkit.closest(target, ".point[data-id]");
+		element = Toolkit.closest(target, '.point[data-id]');
 		if (element) {
 			return {
 				model: diagramModel
-					.getLink(element.getAttribute("data-linkid"))
-					.getPointModel(element.getAttribute("data-id")),
+					.getLink(element.getAttribute('data-linkid'))
+					.getPointModel(element.getAttribute('data-id')),
 				element: element
 			};
 		}
 
 		//look for a link
-		element = Toolkit.closest(target, "[data-linkid]");
+		element = Toolkit.closest(target, '[data-linkid]');
 		if (element) {
 			return {
-				model: diagramModel.getLink(element.getAttribute("data-linkid")),
+				model: diagramModel.getLink(element.getAttribute('data-linkid')),
 				element: element
 			};
 		}
 
 		//look for a node
-		element = Toolkit.closest(target, ".node[data-nodeid]");
+		element = Toolkit.closest(target, '.node[data-nodeid]');
 		if (element) {
 			return {
-				model: diagramModel.getNode(element.getAttribute("data-nodeid")),
+				model: diagramModel.getNode(element.getAttribute('data-nodeid')),
 				element: element
 			};
 		}
@@ -214,15 +217,15 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 		if (this.state.action instanceof SelectingAction) {
 			var relative = diagramEngine.getRelativePoint(event.clientX, event.clientY);
 
-			_.forEach(diagramModel.getNodes(), node => {
+			_.forEach(diagramModel.getNodes(), (node) => {
 				if ((this.state.action as SelectingAction).containsElement(node.x, node.y, diagramModel)) {
 					node.setSelected(true);
 				}
 			});
 
-			_.forEach(diagramModel.getLinks(), link => {
+			_.forEach(diagramModel.getLinks(), (link) => {
 				var allSelected = true;
-				_.forEach(link.points, point => {
+				_.forEach(link.points, (point) => {
 					if ((this.state.action as SelectingAction).containsElement(point.x, point.y, diagramModel)) {
 						point.setSelected(true);
 					} else {
@@ -246,7 +249,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 			let amountY = event.clientY - this.state.action.mouseY;
 			let amountZoom = diagramModel.getZoomLevel() / 100;
 
-			_.forEach(this.state.action.selectionModels, model => {
+			_.forEach(this.state.action.selectionModels, (model) => {
 				// in this case we need to also work out the relative grid position
 				if (
 					model.model instanceof NodeModel ||
@@ -257,7 +260,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 
 					// update port coordinates as well
 					if (model.model instanceof NodeModel) {
-						_.forEach(model.model.getPorts(), port => {
+						_.forEach(model.model.getPorts(), (port) => {
 							const portCoords = this.props.diagramEngine.getPortCoords(port);
 							port.updateCoords(portCoords);
 						});
@@ -300,7 +303,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 	onKeyUp(event) {
 		//delete all selected
 		if (this.props.deleteKeys.indexOf(event.keyCode) !== -1) {
-			_.forEach(this.props.diagramEngine.getDiagramModel().getSelectedItems(), element => {
+			_.forEach(this.props.diagramEngine.getDiagramModel().getSelectedItems(), (element) => {
 				//only delete items which are not locked
 				if (!this.props.diagramEngine.isModelLocked(element)) {
 					element.remove();
@@ -315,7 +318,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 		//are we going to connect a link to something?
 		if (this.state.action instanceof MoveItemsAction) {
 			var element = this.getMouseElement(event);
-			_.forEach(this.state.action.selectionModels, model => {
+			_.forEach(this.state.action.selectionModels, (model) => {
 				//only care about points connecting to things
 				if (!(model.model instanceof PointModel)) {
 					return;
@@ -349,7 +352,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 
 			//check for / remove any loose links in any models which have been moved
 			if (!this.props.allowLooseLinks && this.state.wasMoved) {
-				_.forEach(this.state.action.selectionModels, model => {
+				_.forEach(this.state.action.selectionModels, (model) => {
 					//only care about points connecting to things
 					if (!(model.model instanceof PointModel)) {
 						return;
@@ -364,7 +367,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 			}
 
 			//remove any invalid links
-			_.forEach(this.state.action.selectionModels, model => {
+			_.forEach(this.state.action.selectionModels, (model) => {
 				//only care about points connecting to things
 				if (!(model.model instanceof PointModel)) {
 					return;
@@ -396,15 +399,15 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 			diagramEngine.clearRepaintEntities();
 			this.stopFiringAction();
 		}
-		this.state.document.removeEventListener("mousemove", this.onMouseMove);
-		this.state.document.removeEventListener("mouseup", this.onMouseUp);
+		this.state.document.removeEventListener('mousemove', this.onMouseMove);
+		this.state.document.removeEventListener('mouseup', this.onMouseUp);
 	}
 
 	drawSelectionBox() {
 		let dimensions = (this.state.action as SelectingAction).getBoxDimensions();
 		return (
 			<div
-				className={this.bem("__selector")}
+				className={this.bem('__selector')}
 				style={{
 					top: dimensions.top,
 					left: dimensions.left,
@@ -424,12 +427,12 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 		return (
 			<div
 				{...this.getProps()}
-				ref={ref => {
+				ref={(ref) => {
 					if (ref) {
 						this.props.diagramEngine.setCanvas(ref);
 					}
 				}}
-				onWheel={event => {
+				onWheel={(event) => {
 					if (this.props.allowCanvasZoom) {
 						event.preventDefault();
 						event.stopPropagation();
@@ -474,7 +477,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 						this.forceUpdate();
 					}
 				}}
-				onMouseDown={event => {
+				onMouseDown={(event) => {
 					if (event.nativeEvent.which === 3) return;
 					this.setState({ ...this.state, wasMoved: false });
 
@@ -526,19 +529,20 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 							diagramModel.clearSelection();
 						}
 						model.model.setSelected(true);
-
+						
 						this.startFiringAction(new MoveItemsAction(event.clientX, event.clientY, diagramEngine));
 					}
-					this.state.document.addEventListener("mousemove", this.onMouseMove);
-					this.state.document.addEventListener("mouseup", this.onMouseUp);
+					this.state.document.addEventListener('mousemove', this.onMouseMove);
+					this.state.document.addEventListener('mouseup', this.onMouseUp);
 				}}
 			>
+
 				{this.state.renderedNodes && (
 					<LinkLayerWidget
 						diagramEngine={diagramEngine}
 						pointAdded={(point: PointModel, event) => {
-							this.state.document.addEventListener("mousemove", this.onMouseMove);
-							this.state.document.addEventListener("mouseup", this.onMouseUp);
+							this.state.document.addEventListener('mousemove', this.onMouseMove);
+							this.state.document.addEventListener('mouseup', this.onMouseUp);
 							event.stopPropagation();
 							diagramModel.clearSelection(point);
 							this.setState({
@@ -547,6 +551,30 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 						}}
 					/>
 				)}
+			
+				{/* 
+				<div className={this.bem('__inPortsMenu')}>
+						<a
+							className={this.bem('__close')}
+							onClick={() => {
+								console.log('Test');
+	
+								this.props.diagramEngine.repaintCanvas();
+							}}
+						>
+							<FontAwesomeIcon icon={faMinus} size="xs" />
+						</a>
+						<a
+							className={this.bem('__close')}
+							onClick={() => {
+								console.log('Test');
+								this.props.diagramEngine.repaintCanvas();
+							}}
+						>
+							<FontAwesomeIcon icon={faPlus} size="xs" />
+						</a>
+					</div>*/}
+
 				<NodeLayerWidget diagramEngine={diagramEngine} />
 				{this.state.action instanceof SelectingAction && this.drawSelectionBox()}
 			</div>

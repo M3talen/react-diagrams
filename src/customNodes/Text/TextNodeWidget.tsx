@@ -6,12 +6,19 @@ import { DiagramEngine } from '../../DiagramEngine';
 import { BaseWidget, BaseWidgetProps } from '../../widgets/BaseWidget';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-responsive-modal';
+import ResizableTextArea from 'react-resizable-textarea';
+import { basename } from 'path';
+
 export interface TextNodeProps extends BaseWidgetProps {
 	node: TextNodeModel;
 	diagramEngine: DiagramEngine;
 }
 
-export interface TextNodeState {}
+export interface TextNodeState {
+	open: boolean;
+	output: string;
+}
 
 /**
  * @author Alen Štruklec
@@ -19,7 +26,10 @@ export interface TextNodeState {}
 export class TextNodeWidget extends BaseWidget<TextNodeProps, TextNodeState> {
 	constructor(props: TextNodeProps) {
 		super('srd-text-node', props);
-		this.state = {};
+		this.state = {
+			open: false,
+			output: props.node.output
+		};
 	}
 
 	generatePort(port) {
@@ -28,11 +38,41 @@ export class TextNodeWidget extends BaseWidget<TextNodeProps, TextNodeState> {
 
 	setOutput = (val) => {
 		this.props.node.output = val;
+		this.setState({output:val})
+	};
+	onOpenModal = () => {
+		this.setState({ open: true });
+	};
+
+	onCloseModal = () => {
+		this.setState({ open: false });
+		this.forceUpdate();
 	};
 
 	render() {
+		const { open } = this.state;
 		return (
 			<div {...this.getProps()} style={{ background: this.props.node.color }}>
+				<Modal
+					showCloseIcon={false}
+					classNames={{
+						overlay: this.bem('__cO'),
+						modal: this.bem('__cM')
+					}}
+					open={open}
+					onClose={this.onCloseModal}
+					center
+				>
+					<ResizableTextArea
+						type="text"
+						minWidth={300} // Minimum width in px
+						minHeight={225} // Minimum height in px
+						value={this.state.output}
+						onChange={(e) => {
+							this.setOutput(e.target.value);
+						}}
+					/>
+				</Modal>
 				<div className={this.bem('__title')}>
 					<div className={this.bem('__name')}>{this.props.node.name}</div>
 
@@ -47,14 +87,13 @@ export class TextNodeWidget extends BaseWidget<TextNodeProps, TextNodeState> {
 					</a>
 				</div>
 				<div className={this.bem('__body')}>
-					<input
-						type="text"
+					<label
 						className={this.bem('__input')}
-						defaultValue={this.props.node.output}
-						onChange={(e) => {
-							this.setOutput(e.currentTarget.value);
+						onClick={(e) => {
+							this.onOpenModal();
 						}}
-					/>
+					>{this.state.output.length < 16 ? this.state.output : (this.state.output.slice(0,13) + '...')}
+					</label>
 				</div>
 				<div className={this.bem('__ports')}>
 					<div className={this.bem('__in')}>
