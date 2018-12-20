@@ -47,9 +47,7 @@ export class DelayNodeWidget extends BaseWidget<DelayNodeProps, DelayNodeState> 
 					</a>
 				</div>
 				<div className={this.bem('__body')}>
-					<a>
-						Wait for{' '}
-					</a>
+					<a style={{ color: 'white' }}>Wait for </a>
 					<input
 						type="number"
 						className={this.bem('__input')}
@@ -58,7 +56,8 @@ export class DelayNodeWidget extends BaseWidget<DelayNodeProps, DelayNodeState> 
 							this.setOutput(e.currentTarget.value);
 						}}
 					/>
-					<a>ms </a>
+
+					<a style={{ color: 'white' }}>ms </a>
 				</div>
 				<div className={this.bem('__ports')}>
 					<div className={this.bem('__in')}>
