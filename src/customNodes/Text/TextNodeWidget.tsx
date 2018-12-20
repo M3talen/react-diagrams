@@ -92,7 +92,7 @@ export class TextNodeWidget extends BaseWidget<TextNodeProps, TextNodeState> {
 						onClick={(e) => {
 							this.onOpenModal();
 						}}
-					>{this.state.output.length < 16 ? this.state.output : (this.state.output.slice(0,13) + '...')}
+					>{this.state.output.length < 23 ? this.state.output : (this.state.output.slice(0,20) + '...')}
 					</label>
 				</div>
 				<div className={this.bem('__ports')}>
