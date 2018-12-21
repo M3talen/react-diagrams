@@ -64,14 +64,17 @@ export class TextNodeWidget extends BaseWidget<TextNodeProps, TextNodeState> {
 					center
 				>
 					<ResizableTextArea
+						
+						className={this.bem('__inputBlack')}
 						type="text"
-						minWidth={300} // Minimum width in px
+						minWidth={280} // Minimum width in px
 						minHeight={225} // Minimum height in px
 						value={this.state.output}
 						onChange={(e) => {
 							this.setOutput(e.target.value);
 						}}
 					/>
+					<button className={this.bem('__button')} onClick={this.onCloseModal}>Close</button>
 				</Modal>
 				<div className={this.bem('__title')}>
 					<div className={this.bem('__name')}>{this.props.node.name}</div>

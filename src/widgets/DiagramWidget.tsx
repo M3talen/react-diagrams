@@ -56,7 +56,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 		allowCanvasTranslation: true,
 		allowCanvasZoom: true,
 		inverseZoom: false,
-		maxNumberPointsPerLink: Infinity, // backwards compatible default
+		maxNumberPointsPerLink: 0, // backwards compatible default
 		smartRouting: false,
 		deleteKeys: [ 46 ]
 	};

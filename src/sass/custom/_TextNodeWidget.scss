@@ -31,6 +31,34 @@
 		padding-left: 4px;
 	}
 
+	&__button {
+		    float: right;
+    margin-bottom: -8px;
+    margin-top: 4px;
+    border-width: 0;
+    outline: none;
+    padding: 6px;
+    border-radius: 2px;
+    background: #4286f4;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+    color: white;
+    font-size: 14px;
+	}
+
+	&__inputBlack {
+		-webkit-appearance: none;
+		width: 100%;
+		border: 0;
+		font-family: inherit;
+		padding: 2px 0;
+		font-weight: 500;
+		font-size: 12px;
+		border-bottom: 1px solid #c8ccd4;
+		background: none;
+		border-radius: 0;
+		color: black;
+		padding-left: 4px;
+	}
 	&__close {
 		cursor: pointer;
 		color: #fff;
