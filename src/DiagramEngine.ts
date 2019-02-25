@@ -17,6 +17,10 @@ import { SimpleTextPortFactory } from './customNodes/Text/SimpleTextPortFactory'
 import { TextNodeFactory } from './customNodes/Text/TextNodeFactory';
 import { DelayPortFactory } from './customNodes/Delay/DelayPortFactory';
 import { DelayNodeFactory } from './customNodes/Delay/DelayNodeFactory';
+import { BeginPortFactory } from './customNodes/Begin/BeginPortFactory';
+import { BeginNodeFactory } from './customNodes/Begin/BeginNodeFactory';
+import { EndPortFactory } from './customNodes/End/EndPortFactory';
+import { EndNodeFactory } from './customNodes/End/EndNodeFactory';
 import { LabelModel } from './models/LabelModel';
 import { DefaultLabelFactory } from './defaults/factories/DefaultLabelFactory';
 import { Toolkit } from './Toolkit';
@@ -84,10 +88,14 @@ export class DiagramEngine extends BaseEntity<DiagramEngineListener> {
 		this.registerNodeFactory(new DefaultNodeFactory());
 		this.registerNodeFactory(new TextNodeFactory());
 		this.registerNodeFactory(new DelayNodeFactory());
+		this.registerNodeFactory(new BeginNodeFactory());
+		this.registerNodeFactory(new EndNodeFactory());
 		this.registerLinkFactory(new DefaultLinkFactory());
 		this.registerPortFactory(new DefaultPortFactory());
 		this.registerPortFactory(new SimpleTextPortFactory());
 		this.registerPortFactory(new DelayPortFactory());
+		this.registerPortFactory(new BeginPortFactory());
+		this.registerPortFactory(new EndPortFactory());
 		this.registerLabelFactory(new DefaultLabelFactory());
 	}
 

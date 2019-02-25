@@ -9,6 +9,8 @@ import {
 	TextNodeModel,
 	TextNodeWidget,
 	TextPortModel,
+	BeginNodeModel,
+	EndNodeModel,
 	SimpleTextPortFactory
 } from 'storm-react-diagrams';
 export default () => {
@@ -35,9 +37,18 @@ export default () => {
 
 	
 	var node4 = new DelayNodeModel('Delay', 'test', 'rgb(70,192,150)');
-	node4.setPosition(200, 200);
+	node4.setPosition(500, 200);
 	var port3i = node4.addInPort('In');
 	var port3 = node4.addOutPort('Out');
+
+	
+	var node55 = new BeginNodeModel('Begin', 'rgb(143,62,150)');
+	node55.setPosition(200, 200);
+	var port3 = node55.addOutPort('Start');
+
+	var node535 = new EndNodeModel('End', 'rgb(143,62,150)');
+	node535.setPosition(400, 200);
+	var port3 = node535.addInPort('End');
 
 	//3-B) create another default node
 	var node2 = new DefaultNodeModel('Node 2', 'rgb(192,255,0)');
@@ -45,7 +56,7 @@ export default () => {
 	node2.setPosition(400, 100);
 
 	//4) add the models to the root graph
-	model.addAll(node1, node2, node3, node4);
+	model.addAll(node1, node2, node3, node4, node55	, node535);
 
 	//5) load model into engine
 	engine.setDiagramModel(model);
