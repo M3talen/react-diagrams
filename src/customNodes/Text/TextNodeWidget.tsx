@@ -10,6 +10,7 @@ import Modal from 'react-responsive-modal';
 import ResizableTextArea from 'react-resizable-textarea';
 import { basename } from 'path';
 
+
 export interface TextNodeProps extends BaseWidgetProps {
 	node: TextNodeModel;
 	diagramEngine: DiagramEngine;
@@ -33,19 +34,21 @@ export class TextNodeWidget extends BaseWidget<TextNodeProps, TextNodeState> {
 	}
 
 	generatePort(port) {
-		return <TextPortLabel model={port} key={port.id} />;
+		return <TextPortLabel model={port} key={port.id} diagramEngine={this.props.diagramEngine} />;
 	}
 
 	setOutput = (val) => {
 		this.props.node.output = val;
-		this.setState({output:val})
+		this.setState({ output: val })
 	};
 	onOpenModal = () => {
 		this.setState({ open: true });
+		this.props.diagramEngine.setLocked(true);
 	};
 
 	onCloseModal = () => {
 		this.setState({ open: false });
+		this.props.diagramEngine.setLocked(false);
 		this.forceUpdate();
 	};
 
@@ -64,7 +67,7 @@ export class TextNodeWidget extends BaseWidget<TextNodeProps, TextNodeState> {
 					center
 				>
 					<ResizableTextArea
-						
+
 						className={this.bem('__inputBlack')}
 						type="text"
 						minWidth={280} // Minimum width in px
@@ -95,14 +98,31 @@ export class TextNodeWidget extends BaseWidget<TextNodeProps, TextNodeState> {
 						onClick={(e) => {
 							this.onOpenModal();
 						}}
-					>{this.state.output.length < 23 ? this.state.output : (this.state.output.slice(0,20) + '...')}
+					>{this.state.output.length < 23 ? this.state.output : (this.state.output.slice(0, 20) + '...')}
 					</label>
 				</div>
-				<div className={this.bem('__ports')}>
-					<div className={this.bem('__in')}>
+				<div className={this.bem('__ports')}
+				>
+					<div className={this.bem('__in')}
+						onMouseEnter={(e) => {
+							this.props.node.setLocked(true);
+							this.props.diagramEngine.setLocked(true);
+						}}
+						onMouseLeave={(e) => {
+							this.props.node.setLocked(false);
+							this.props.diagramEngine.setLocked(false);
+						}}  >
 						{_.map(this.props.node.getInPorts(), this.generatePort.bind(this))}
 					</div>
-					<div className={this.bem('__out')}>
+					<div className={this.bem('__out')}
+						onMouseEnter={(e) => {
+							this.props.node.setLocked(true);
+							this.props.diagramEngine.setLocked(true);
+						}}
+						onMouseLeave={(e) => {
+							this.props.node.setLocked(false);
+							this.props.diagramEngine.setLocked(false);
+						}}  >
 						<div className={this.bem('__timeout')}>
 							{_.map(this.props.node.getTimeoutPorts(), this.generatePort.bind(this))}
 						</div>

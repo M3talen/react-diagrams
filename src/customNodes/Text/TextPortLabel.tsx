@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { TextPortModel } from './TextPortModel';
 import { TextPortWidget } from './TextPortWidget';
+import { DiagramEngine } from '../../DiagramEngine';
 import { BaseWidget, BaseWidgetProps } from '../../widgets/BaseWidget';
 
 export interface TextPortLabelProps extends BaseWidgetProps {
 	model: TextPortModel;
+	diagramEngine: DiagramEngine;
 }
 
-export interface TextPortLabelState {}
+export interface TextPortLabelState { }
 
 /**
  * @author Alen Štruklec

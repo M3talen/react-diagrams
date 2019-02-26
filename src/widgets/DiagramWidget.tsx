@@ -484,7 +484,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 					diagramEngine.clearRepaintEntities();
 					var model = this.getMouseElement(event);
 					//the canvas was selected
-					if (model === null) {
+					if (model === null && !this.props.diagramEngine.isLocked()) {
 						//is it a multiple selection
 						if (event.shiftKey) {
 							var relative = diagramEngine.getRelativePoint(event.clientX, event.clientY);

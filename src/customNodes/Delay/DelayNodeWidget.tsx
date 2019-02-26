@@ -11,7 +11,7 @@ export interface DelayNodeProps extends BaseWidgetProps {
 	diagramEngine: DiagramEngine;
 }
 
-export interface DelayNodeState {}
+export interface DelayNodeState { }
 
 /**
  * @author Alen Štruklec
@@ -54,6 +54,14 @@ export class DelayNodeWidget extends BaseWidget<DelayNodeProps, DelayNodeState> 
 						defaultValue={this.props.node.delayTime}
 						onChange={(e) => {
 							this.setOutput(e.currentTarget.value);
+						}}
+						onMouseEnter={(e) => {
+							this.props.diagramEngine.setLocked(true);
+							this.props.node.setLocked(true);
+						}}
+						onMouseLeave={(e) => {
+							this.props.diagramEngine.setLocked(false);
+							this.props.node.setLocked(false);
 						}}
 					/>
 
