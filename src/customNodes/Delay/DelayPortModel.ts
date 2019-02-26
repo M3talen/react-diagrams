@@ -37,8 +37,13 @@ export class DelayPortModel extends PortModel {
 
 	link(port: PortModel): LinkModel {
 		let link = this.createLinkModel();
-		link.setSourcePort(this);
-		link.setTargetPort(port);
+		if(this.in){
+			link.setSourcePort(port);
+			link.setTargetPort(this);
+		}else{
+			link.setSourcePort(this);
+			link.setTargetPort(port);
+		}
 		return link;
 	}
 
