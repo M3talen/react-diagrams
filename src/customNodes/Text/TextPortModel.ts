@@ -14,7 +14,7 @@ export class TextPortModel extends PortModel {
 	links: { [id: string]: DefaultLinkModel };
 
 	constructor(portType: string, name: string, label: string = null, id?: string) {
-		super(name, 'text', id);
+		super(name, 'text', id,  portType == "INPUT" ? true : false);
 		this.in = portType == "INPUT" ? true : false;
 		this.label = label || name;
 		this.portType = portType;

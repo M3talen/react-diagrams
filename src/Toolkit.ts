@@ -7,7 +7,7 @@ import * as Path from "paths-js/path";
  * @author Dylan Vorster
  */
 export class Toolkit {
-	static TESTING: boolean = false;
+	static TESTING: boolean = true;
 	static TESTING_UID = 0;
 
 	/**

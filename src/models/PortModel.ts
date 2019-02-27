@@ -8,6 +8,7 @@ export class PortModel extends BaseModel<NodeModel, BaseModelListener> {
 	name: string;
 	links: { [id: string]: LinkModel };
 	maximumLinks: number;
+	isInput: boolean
 
 	// calculated post rendering so routing can be done correctly
 	x: number;
@@ -15,17 +16,19 @@ export class PortModel extends BaseModel<NodeModel, BaseModelListener> {
 	width: number;
 	height: number;
 
-	constructor(name: string, type?: string, id?: string, maximumLinks?: number) {
+	constructor(name: string, type?: string, id?: string, isInput?: boolean, maximumLinks?: number) {
 		super(type, id);
 		this.name = name;
 		this.links = {};
 		this.maximumLinks = maximumLinks;
+		this.isInput = isInput;
 	}
 
 	deSerialize(ob, engine: DiagramEngine) {
 		super.deSerialize(ob, engine);
 		this.name = ob.name;
 		this.maximumLinks = ob.maximumLinks;
+		this.isInput= ob.isInput;
 	}
 
 	serialize() {
@@ -35,7 +38,8 @@ export class PortModel extends BaseModel<NodeModel, BaseModelListener> {
 			links: _.map(this.links, link => {
 				return link.id;
 			}),
-			maximumLinks: this.maximumLinks
+			maximumLinks: this.maximumLinks,
+			isInput: this.isInput
 		});
 	}
 
@@ -94,6 +98,8 @@ export class PortModel extends BaseModel<NodeModel, BaseModelListener> {
 	canLinkToPort(port: PortModel): boolean {
 		return true;
 	}
+
+	
 
 	isLocked() {
 		return super.isLocked() || this.getParent().isLocked();

@@ -14,7 +14,7 @@ export class EndPortModel extends PortModel {
 	links: { [id: string]: DefaultLinkModel };
 
 	constructor(portType: string, name: string, label: string = null, id?: string) {
-		super(name, 'End', id);
+		super(name, 'End', id, portType == "INPUT" ? true : false);
 		this.in = portType == "INPUT" ? true : false;
 		this.label = label || name;
 		this.portType = portType;

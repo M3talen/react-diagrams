@@ -19,6 +19,7 @@ import { BaseWidget, BaseWidgetProps } from './BaseWidget';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { DiagramModel } from 'src/models/DiagramModel';
 
 export interface DiagramProps extends BaseWidgetProps {
 	diagramEngine: DiagramEngine;
@@ -345,7 +346,15 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 						}
 					} else {
 						link.setTargetPort(element.model);
+						console.log(link)
 					}
+
+					if(link.sourcePort.isInput){
+						var orgSource = link.getSourcePort();
+						link.setSourcePort(link.getTargetPort());
+						link.setTargetPort(orgSource)
+					}
+					console.log(link)
 					delete this.props.diagramEngine.linksThatHaveInitiallyRendered[link.getID()];
 				}
 			});
@@ -376,6 +385,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 				let link: LinkModel = model.model.getLink();
 				let sourcePort: PortModel = link.getSourcePort();
 				let targetPort: PortModel = link.getTargetPort();
+
 				if (sourcePort !== null && targetPort !== null) {
 					if (!sourcePort.canLinkToPort(targetPort)) {
 						//link not allowed
@@ -395,6 +405,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 
 			diagramEngine.clearRepaintEntities();
 			this.stopFiringAction(!this.state.wasMoved);
+			
 		} else {
 			diagramEngine.clearRepaintEntities();
 			this.stopFiringAction();
