@@ -360,7 +360,7 @@ export class DiagramWidget extends BaseWidget<DiagramProps, DiagramState> {
 			});
 
 			//check for / remove any loose links in any models which have been moved
-			if (!this.props.allowLooseLinks && this.state.wasMoved) {
+			if (!this.props.allowLooseLinks || this.state.wasMoved) {
 				_.forEach(this.state.action.selectionModels, (model) => {
 					//only care about points connecting to things
 					if (!(model.model instanceof PointModel)) {

@@ -20,7 +20,7 @@ export class PortModel extends BaseModel<NodeModel, BaseModelListener> {
 		super(type, id);
 		this.name = name;
 		this.links = {};
-		this.maximumLinks = maximumLinks;
+		this.maximumLinks = maximumLinks ? maximumLinks : 1;
 		this.isInput = isInput;
 	}
 

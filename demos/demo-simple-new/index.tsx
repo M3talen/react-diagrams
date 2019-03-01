@@ -56,8 +56,8 @@ export default () => {
 	node2.setPosition(400, 100);
 
 	//4) add the models to the root graph
-	//model.addAll(node1, node2, node3, node4, node55	, node535);
-	model.addAll(node3, node4);
+	model.addAll(node1, node2, node3, node4, node55	, node535);
+	//model.addAll(node3, node4);
 
 	//5) load model into engine
 	engine.setDiagramModel(model);
